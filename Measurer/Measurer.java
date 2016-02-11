@@ -1,7 +1,7 @@
 /**
    Describes any class whose objects can measure other objects.
 */
-public interface Measurer
+public interface Measurer // measures other objects
 {
    /**
       Computes the measure of an object.

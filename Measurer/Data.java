@@ -15,5 +15,5 @@ public class Data
       }
       if (objects.length > 0) { return sum / objects.length; }
       else { return 0; }
-   }
+   } // calculates an average of the measures of the given objects
 }
