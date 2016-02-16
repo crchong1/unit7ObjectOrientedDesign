@@ -14,9 +14,8 @@ public class TriangleFrame extends JFrame
     {
         public void mousePressed(MouseEvent event)
         {
-            int x = event.getX();
-            int y = event.getY();
-            
+            scene.addPos(event.getX(), event.getY());
+            repaint();
         }
 
         public void mouseReleased(MouseEvent event) {}
@@ -25,14 +24,6 @@ public class TriangleFrame extends JFrame
         public void mouseExited(MouseEvent event) {}
     }
     
-    public int XPass(int x)
-    {
-        return x;
-    }
-    public int YPass(int y)
-    {
-        return y;
-    }
     public TriangleFrame()
     {
         scene = new TriangleComponent();
