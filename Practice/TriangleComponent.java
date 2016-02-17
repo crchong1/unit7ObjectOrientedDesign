@@ -14,41 +14,64 @@ import java.awt.geom.Line2D;
 public class TriangleComponent extends JComponent
 {
     private Polygon triangle;
-    private int[] xArray = new int [3];
-    private int[] yArray = new int [3];
+    private int[] xArray = new int [5];
+    private int[] yArray = new int [5];
+    private int counter = 0;
     public TriangleComponent()
     {
-        this.triangle = new Polygon();
     }
 
     public void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        g2.draw(triangle);
-    }
-    public void drawTriangle()
-    {
         
+        if(this.counter == 1)
+        {
+            this.drawPoint(this.xArray[this.counter], this.yArray[this.counter], g2);
+        }
+        if(this.counter == 2)
+        {
+            this.drawPoint(this.xArray[this.counter], this.yArray[this.counter], g2);
+            this.drawPoint(this.xArray[this.counter-1], this.yArray[this.counter-1], g2);
+            this.drawLine(this.xArray[this.counter], this.yArray[this.counter], this.xArray[this.counter-1], this.yArray[this.counter-1], g2);
+        }
+        if(this.counter == 3)
+        {
+            this.drawPoint(this.xArray[this.counter], this.yArray[this.counter], g2);
+            this.drawPoint(this.xArray[this.counter-1], this.yArray[this.counter-1], g2);
+            this.drawPoint(this.xArray[this.counter-2], this.yArray[this.counter-2], g2);
+            this.drawLine(this.xArray[this.counter], this.yArray[this.counter], this.xArray[this.counter-1], this.yArray[this.counter-1], g2);
+            this.drawLine(this.xArray[this.counter], this.yArray[this.counter], this.xArray[this.counter-2], this.yArray[this.counter-2], g2);
+            this.drawLine(this.xArray[this.counter-1], this.yArray[this.counter-1], this.xArray[this.counter-2], this.yArray[this.counter-2], g2);
+        }
+        if(this.counter == 4)
+        {
+            repaint();
+            this.counter = 0;
+            for(int i = 0; i < xArray.length; i++)
+            {
+                xArray[i] = 0;
+            }
+            for(int i = 0; i < yArray.length; i++)
+            {
+                yArray[i] = 0;
+            }
+        }
         
     }
     public void drawPoint(int x, int y , Graphics2D g2)
     {
         g2.draw(new Ellipse2D.Double(x, y, 3,3));
     }
-    public void drawLine (int x1, int x2, int y1, int y2, Graphics2D g2)
+    public void drawLine (int x1, int y1, int x2, int y2, Graphics2D g2)
     {
-        g2.draw(new Line2D.Double(x1, x2, y1, y2));
+        g2.draw(new Line2D.Double(x1, y1, x2, y2));
     }
     public void addPos(int x, int y)
     {
-        int[][] posArray = new int[4][2];
-        for(int i = 0; i< posArray.length; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                posArray[i][j] = posArray[x][y];
-            }
-        }
+        this.counter++;
+        this.xArray[this.counter] = x;
+        this.yArray[this.counter] = y;
         
     }
  
