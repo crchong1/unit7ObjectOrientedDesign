@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -15,30 +16,49 @@ import java.awt.event.ActionEvent;
  */
 public class ControlPanel extends JPanel
 {
-    private JFrame frame;
-    private Button button;
-    private Button button2;
-    private Button button3;
-    private JPanel panel;
-    private JLabel label;
-    
-    public ControlPanel()
-    {
-        this.frame = new JFrame();
+    private JButton button;
+    private JButton button2;
+    private JButton button3;
+    private DrawingPanel canvas;
+    public ControlPanel(DrawingPanel canvas)
+    {        
+        this.canvas = canvas;
+        this.button = new JButton("Pick Color");
+        this.add(this.button);
         
-        this.button = new Button("Pick Color");
-        this.panel.add(this.button);
+        this.button2 = new JButton("Add Circle");
+        this.add(this.button2);
         
-        this.panel = new JPanel();
-        //canvas.getColor()
+        this.button3 = new JButton("Add Square");
+        this.add(this.button3);
         
-        this.button2 = new Button("Add Circle");
-        this.panel.add(this.button2);
         
-        this.button3 = new Button("Add Square");
-        this.panel.add(this.button3);
+        ClickListener listener = new ClickListener();
+        this.button.addActionListener(listener); //you need this to register the listener
+        this.button2.addActionListener(listener); //you need this to register the listener
+        this.button3.addActionListener(listener); //you need this to register the listener
     }
-
     
+
+    public class ClickListener implements ActionListener
+    {
+    
+        public void actionPerformed(ActionEvent event)
+        {
+            if(button == event.getSource())
+            {
+                canvas.pickColor();
+            }
+            else if (button2 == event.getSource())
+            {
+                canvas.addCircle();
+            }
+            else if (button3 == event.getSource())
+            {
+                canvas.addSquare();
+            }
+            
+        }
+    }
 
 }

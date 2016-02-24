@@ -19,13 +19,15 @@ import java.applet.Applet;
 public class DrawingEditor extends JFrame
 {
     private JLabel label;
+    private int WINDOW_HEIGHT = 800;
+    private int WINDOW_LENGTH = 600;
     public DrawingEditor()
-    {
-        this.label = new JLabel("Drawing Editor");
-        this.panel.add(this.label);
-        
+    {    
+        super();
+                
         DrawingPanel canvas  = new DrawingPanel();
         ControlPanel controls = new ControlPanel(canvas);
+        this.setTitle("DrawingEditor");
         
     }
 
