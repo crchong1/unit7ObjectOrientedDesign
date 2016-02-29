@@ -21,7 +21,9 @@ public class ControlPanel extends JPanel
     private JButton button3;
     private DrawingPanel canvas;
     public ControlPanel(DrawingPanel canvas)
-    {        
+    {   
+        this.add(canvas);
+        
         this.canvas = canvas;
         this.button = new JButton("Pick Color");
         this.add(this.button);
@@ -32,6 +34,7 @@ public class ControlPanel extends JPanel
         this.button3 = new JButton("Add Square");
         this.add(this.button3);
         
+        this.show();
         
         ClickListener listener = new ClickListener();
         this.button.addActionListener(listener); //you need this to register the listener

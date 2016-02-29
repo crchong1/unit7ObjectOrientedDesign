@@ -23,12 +23,12 @@ public class DrawingEditor extends JFrame
     private int WINDOW_LENGTH = 600;
     public DrawingEditor()
     {    
-        super();
+        JFrame frame = new JFrame("Drawing Editor");
                 
         DrawingPanel canvas  = new DrawingPanel();
         ControlPanel controls = new ControlPanel(canvas);
-        this.setTitle("DrawingEditor");
-        
+        frame.add(controls);
+        frame.show();
     }
 
     public static void main(String[] args)
