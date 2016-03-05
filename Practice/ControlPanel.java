@@ -1,5 +1,3 @@
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,7 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.awt.Color;
+import java.awt.Dimension;
 /**
  * class ControlPanel which creates a window
  * 
@@ -16,30 +15,38 @@ import java.awt.event.ActionEvent;
  */
 public class ControlPanel extends JPanel
 {
-    private JButton button;
-    private JButton button2;
-    private JButton button3;
+    private JButton colorButton;
+    private JButton circleButton;
+    private JButton squareButton;
+    private Color newColor;
+    private JPanel squareColor;
     private DrawingPanel canvas;
     public ControlPanel(DrawingPanel canvas)
     {   
-        this.add(canvas);
+
         
-        this.canvas = canvas;
-        this.button = new JButton("Pick Color");
-        this.add(this.button);
+        this.colorButton = new JButton("Pick Color");
+        this.add(this.colorButton);
         
-        this.button2 = new JButton("Add Circle");
-        this.add(this.button2);
+        newColor = canvas.getColor();
         
-        this.button3 = new JButton("Add Square");
-        this.add(this.button3);
+        this.circleButton = new JButton("Add Circle");
+        this.add(this.circleButton);
         
-        this.show();
+        this.squareButton = new JButton("Add Square");
+        this.add(this.squareButton);
+        
+        squareColor = new JPanel();
+        newColor = canvas.getColor();
+        squareColor.setBackground(newColor);
+        squareColor.setPreferredSize(new Dimension(10, 10));
+        this.add(squareColor);
         
         ClickListener listener = new ClickListener();
-        this.button.addActionListener(listener); //you need this to register the listener
-        this.button2.addActionListener(listener); //you need this to register the listener
-        this.button3.addActionListener(listener); //you need this to register the listener
+        this.colorButton.addActionListener(listener); 
+        this.circleButton.addActionListener(listener); //you need this to register the listener
+        this.squareButton.addActionListener(listener); 
+        this.canvas = canvas;
     }
     
 
@@ -48,18 +55,26 @@ public class ControlPanel extends JPanel
     
         public void actionPerformed(ActionEvent event)
         {
-            if(button == event.getSource())
+            if(event.getActionCommand().equals("Pick Color"))
             {
                 canvas.pickColor();
+                System.out.println("Select Color");
+                newColor = canvas.getColor();
+                squareColor.setBackground(newColor);
+                
             }
-            else if (button2 == event.getSource())
+            else if (event.getActionCommand().equals("Add Circle"))
             {
                 canvas.addCircle();
             }
-            else if (button3 == event.getSource())
+            else if (event.getActionCommand().equals("Add Square"))
             {
                 canvas.addSquare();
             }
+            else
+            {
+            }
+            canvas.repaint();
             
         }
     }

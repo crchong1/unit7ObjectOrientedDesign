@@ -1,12 +1,22 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import  java.awt.BorderLayout;
+import java.awt.geom.Ellipse2D;
+import javax.swing.JColorChooser;
+import java.util.ArrayList;
+
+
 /**
  * class DrawingPanel which creates a window
  * 
@@ -16,62 +26,94 @@ import java.awt.Dimension;
 public class DrawingPanel extends JPanel
 {
     private Color color;
+    private Dimension dimension;
+    private ArrayList<Shape> shapeList;
+    private Shape currentShape;
     
+    private Point2D.Double startPoint = new Point2D.Double(250,250);
+    private double startRadius = 60;
+    
+
     public DrawingPanel()
     {
+        this.setBackground(Color.WHITE);
+        this.dimension = new Dimension(800, 800);
+        this.setSize(dimension);
         
-        class CustomMouseMotionListener implements MouseMotionListener
+        this.color = Color.BLACK;
+        
+        this.addMouseListener(new TheMouseListener());
+        this.addMouseMotionListener(new TheMouseListener());
+        
+        shapeList = new ArrayList<Shape>();
+    }    
+    
+    class TheMouseListener implements MouseMotionListener, MouseListener
+    {
+        private boolean inside;
+        public void mouseDragged(MouseEvent event)
         {
-            public void mouseDragged(MouseEvent e)
-            {
-                
-            }
-            public void mouseMoved(MouseEvent e)
-            {
-            }
-            
+            currentShape.move(event.getX(), event.getY());
+            repaint();
         }
-        class MousePressListener implements MouseListener
+        public void mouseMoved(MouseEvent event){}
+        
+        
+        public void mousePressed(MouseEvent event)
         {
-            public void mousePressed(MouseEvent event)
-            {
-                //DrawingEditor.addPos(event.getX(), event.getY());
-                //repaint();
-            }
+           inside = false;
 
-            public void mouseReleased(MouseEvent event) {}
-            public void mouseClicked(MouseEvent event) {}
-            public void mouseEntered(MouseEvent event) {}
-            public void mouseExited(MouseEvent event) {}
+            for(Shape shp: shapeList)
+            {
+                if (shp.isInside(new Point2D.Double(event.getX(), event.getY())))
+                {
+                    inside = true;
+                    currentShape = shp;
+                }            
+            }   
+            if(inside==false)
+            {
+                currentShape = null;
+            }            
+            repaint();
         }
-        Dimension size = new Dimension(600, 800);
-        this.setSize(size);
-        
+
+        public void mouseReleased(MouseEvent event) {}
+        public void mouseClicked(MouseEvent event) {}
+        public void mouseEntered(MouseEvent event) {}
+        public void mouseExited(MouseEvent event) {}
     }
+        
+        
     
     public Color getColor()
     {
         return this.color;
     }
-    //public Dimension getPreferredSize()
+    public Dimension getPreferredSize()
     {
-        
+        return dimension;
     }
     public void pickColor()
     {
-        
+        color = JColorChooser.showDialog(this, "Pick Color", color);
     }
     public void addCircle()
     {
-        
+        shapeList.add(new Circle(startPoint, startRadius, color));
     }
     
     public void addSquare()
     {
-        
+        shapeList.add(new Square(startPoint, startRadius, color));
     }
     public void paintComponent(Graphics g)
     {
-        
+        Graphics2D g2 = (Graphics2D) g;
+        super.paintComponent(g);
+        for(Shape shp: shapeList)
+        {
+            shp.draw(g2, currentShape == null? true: (!(currentShape == shp)));
+        }
     }
 }

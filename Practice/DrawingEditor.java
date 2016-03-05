@@ -1,13 +1,5 @@
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.*;
-import java.applet.Applet;
+import  java.awt.BorderLayout;
 
 
 /**
@@ -18,17 +10,25 @@ import java.applet.Applet;
  */
 public class DrawingEditor extends JFrame
 {
-    private JLabel label;
+    private ControlPanel controls;
+    private DrawingPanel canvas;
+    
     private int WINDOW_HEIGHT = 800;
     private int WINDOW_LENGTH = 600;
+    
     public DrawingEditor()
     {    
-        JFrame frame = new JFrame("Drawing Editor");
-                
+        this.setTitle("Drawing Editor");
         DrawingPanel canvas  = new DrawingPanel();
         ControlPanel controls = new ControlPanel(canvas);
-        frame.add(controls);
-        frame.show();
+
+        this.setLayout(new BorderLayout());
+        this.add(controls, (BorderLayout.SOUTH));
+        this.add(canvas, BorderLayout.CENTER);
+        
+        this.setSize(WINDOW_LENGTH, WINDOW_HEIGHT);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
     public static void main(String[] args)

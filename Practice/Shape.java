@@ -1,11 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.Color;
@@ -16,15 +11,14 @@ import java.awt.geom.Point2D;
  * @Connor Chong 
  * @2/23/16
  */
-public class Shape
+public abstract class Shape
 {
     private Point2D.Double point;
     private double radius;
     private Color color;
-    
-    public Shape(Point2D.Double center, double radius, Color color)
+    public Shape(Point2D.Double point, double radius, Color color)
     {
-       this.point = center;
+       this.point = point;
        this.radius = radius;
        this.color = color;
     }
@@ -40,23 +34,19 @@ public class Shape
     
     public void move(double x, double y)
     {
+        point = new Point2D.Double(x,y);
     }
     public void setRadius(double r)
     {
         this.radius = r;
     }
-    public boolean isInside(Point2D.Double point)
+    public Color getColor()
     {
-        return false;
+        return color;
     }
-    public boolean isOnBorder(Point2D.Double point)
-    {
-        return false;
-    }
-    public void draw(Graphics2D g2, boolean filled)
-    {
-        
-    }
+    public abstract boolean isInside(Point2D.Double point);
+    public abstract boolean isOnBorder(Point2D.Double point);
+    public abstract void draw(Graphics2D g2, boolean filled);
     
     
 
