@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 import java.awt.Graphics2D;
 /**
- * class Circle which describes a circle
+ * class Square which describes a square
  * 
  * @Connor Chong 
  * @2/23/16
@@ -29,9 +29,9 @@ public class Square extends Shape
     public boolean isOnBorder(Point2D.Double point)
     {
         square = new Rectangle2D.Double(super.getCenter().getX(), super.getCenter().getY(), super.getRadius(), super.getRadius());
-        double compRadius = super.getRadius() * .95;
-        Rectangle2D.Double comparator = new Rectangle2D.Double(super.getCenter().getX(), super.getCenter().getY(), compRadius, compRadius);
-        return square.contains(point) && !comparator.contains(point);
+        double compare = super.getRadius() * .95;
+        Rectangle2D.Double compareSquare = new Rectangle2D.Double(super.getCenter().getX(), super.getCenter().getY(), compare, compare);
+        return square.contains(point) && !compareSquare.contains(point);
     }
     
     public void draw(Graphics2D g2, boolean filled)

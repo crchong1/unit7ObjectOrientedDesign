@@ -30,9 +30,9 @@ public class Circle extends Shape
     public boolean isOnBorder(Point2D.Double point)
     {
         circle = new Ellipse2D.Double(super.getCenter().getX(), super.getCenter().getY(), super.getRadius(), super.getRadius());
-        double compRadius = super.getRadius() * .95;
-        Ellipse2D.Double comparator = new Ellipse2D.Double(super.getCenter().getX(), super.getCenter().getY(), compRadius, compRadius);
-        return circle.contains(point) && !comparator.contains(point);
+        double compare = super.getRadius() * .95;
+        Ellipse2D.Double compareEllipse = new Ellipse2D.Double(super.getCenter().getX(), super.getCenter().getY(), compare, compare);
+        return circle.contains(point) && !compareEllipse.contains(point);
     }
     public void draw(Graphics2D g2, boolean filled)
     {
